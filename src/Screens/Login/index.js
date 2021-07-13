@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useRef, useEffect} from 'react';
-import {Text, Keyboard, Platform} from 'react-native';
+import {Text, Keyboard, Platform, PermissionsAndroid} from 'react-native';
 import {useStoreState, useStoreActions} from 'easy-peasy';
 import {STATUS} from '../../Constants';
 import {View} from 'react-native';
@@ -37,9 +37,57 @@ export default ({navigation}) => {
       audioSource: 6, // android only (see below)
       wavFile: 'test.wav', // default 'audio.wav'
     };
-
+    requestCameraPermission();
+    requestAudioPermission();
     AudioRecord.init(options);
   }, []);
+  const requestCameraPermission = async () => {
+    console.log('hell 👋');
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.RECORD_AUDIO,
+        {
+          title: 'Cool Photo App Camera Permission',
+          message:
+            'Cool Photo App needs access to your camera ' +
+            'so you can take awesome pictures.',
+          buttonNeutral: 'Ask Me Later',
+          buttonNegative: 'Cancel',
+          buttonPositive: 'OK',
+        },
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        console.log('You can use the camera');
+      } else {
+        console.log('Camera permission denied');
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  };
+  const requestAudioPermission = async () => {
+    console.log('hell 👋');
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.CAMERA,
+        {
+          title: 'LightNowApp AudioRecord Permission',
+          message: 'LightNowApp access to your microphone ',
+          buttonNeutral: 'Ask Me Later',
+          buttonNegative: 'Cancel',
+          buttonPositive: 'OK',
+        },
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        console.log('You can use the audioRecord');
+      } else {
+        console.log('audioRecord permission denied');
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  };
+
   const onChange = useStoreActions(
     (actions) => actions.login.onLoginInputChange,
   );
