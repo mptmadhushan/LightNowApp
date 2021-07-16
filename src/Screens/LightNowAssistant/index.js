@@ -130,6 +130,25 @@ const MainScreen = ({routes, navigation}) => {
         if (response.flag == 'order-menu') {
           navigation.navigate('order-menu');
         }
+        if (response.flag == 'order-completed') {
+          navigation.navigate('order-completed', {
+            response,
+          });
+        }
+        if (response.flag == 'order-cancelled') {
+          navigation.navigate('order-cancelled', {
+            response,
+          });
+        }
+        if (response.flag == 'navigation-error') {
+          Tts.speak(response.msg, {
+            androidParams: {
+              KEY_PARAM_PAN: -1,
+              KEY_PARAM_VOLUME: 0.5,
+              KEY_PARAM_STREAM: 'STREAM_MUSIC',
+            },
+          });
+        }
         // if (!response.flag == 'navigation-error') {
         //   navigation.navigate(response.flag);
         // } else {

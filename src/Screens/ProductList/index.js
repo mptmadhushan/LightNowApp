@@ -37,9 +37,8 @@ const MainScreen = ({routes, navigation}) => {
 
     AudioRecord.init(options);
 
-    console.log('use effect home');
+    console.log('use effect product list');
   }, [navigation, theme.colors.headerTitle]);
-  const names = ['Bruce', 'Clark', 'Diana'];
 
   const record = () => {
     console.log('record');
@@ -171,11 +170,10 @@ const MainScreen = ({routes, navigation}) => {
             <View
               style={{
                 flex: 1,
-                // flexDirection: 'column',
                 justifyContent: 'space-around',
                 paddingLeft: 20,
               }}>
-              <Text>Name</Text>
+              <Text>Namess</Text>
 
               {resData
                 ? resData.list.map((item) => <Text> {item.item_name} </Text>)

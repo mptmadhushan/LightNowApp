@@ -90,6 +90,9 @@ const MainScreen = ({routes, navigation}) => {
       .then((response) => {
         console.log('response 🔥', response.flag);
         console.log(response);
+        if (response.flag == 'order-completed') {
+          navigation.navigate('order-completed');
+        }
         // if (!response.flag != 'navigation-error') {
         //   navigation.navigate(response.flag);
         // } else {

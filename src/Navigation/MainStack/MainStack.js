@@ -58,7 +58,7 @@ export default (props) => {
       />
       <Stack.Screen
         options={{title: 'Cancelled Orders'}}
-        name="CancelledOrders"
+        name="order-cancelled"
         component={CancelledOrders}
       />
       <Stack.Screen

@@ -13,8 +13,9 @@ import metrics from '../../Themes/Metrics';
 import {Image} from 'react-native';
 import {BASE_URL} from '../../Config/index';
 import AudioRecord from 'react-native-audio-record';
+import Tts from 'react-native-tts';
 
-const MainScreen = ({routes, navigation}) => {
+const MainScreen = ({routes, navigation, route}) => {
   // console.log('navigation', navigation);
   const {theme} = useAppTheme();
   // eslint-disable-next-line prettier/prettier
@@ -22,11 +23,16 @@ const MainScreen = ({routes, navigation}) => {
     username: state.login.username,
     password: state.login.password,
   }));
-
+  const {response} = route.params;
   useEffect(() => {
-    const _toggleDrawer = () => {
-      navigation.toggleDrawer();
-    };
+    console.log('🌙🌙', response);
+    Tts.speak(response.msg, {
+      androidParams: {
+        KEY_PARAM_PAN: -1,
+        KEY_PARAM_VOLUME: 0.5,
+        KEY_PARAM_STREAM: 'STREAM_MUSIC',
+      },
+    });
     const options = {
       sampleRate: 16000, // default 44100
       channels: 1, // 1 or 2, default 1
@@ -109,7 +115,7 @@ const MainScreen = ({routes, navigation}) => {
           padding: 10,
         }}>
         <ScrollView>
-          <View
+          {/* <View
             style={{
               flex: 1,
               flexDirection: 'column',
@@ -158,59 +164,9 @@ const MainScreen = ({routes, navigation}) => {
                 label={'View'}
               />
             </View>
-          </View>
-          <View
-            style={{
-              marginTop: 10,
-              flex: 1,
-              flexDirection: 'column',
-              justifyContent: 'space-around',
-            }}>
-            <View
-              style={{
-                backgroundColor: '#e1e1e1e1',
-                width: metrics.screenWidth * 0.95,
-                height: metrics.screenHeight / 5,
-                borderRadius: 10,
-              }}>
-              <View
-                style={{
-                  flex: 1,
-                  flexDirection: 'row',
-                  justifyContent: 'space-around',
-                }}>
-                <View
-                  style={{
-                    width: '30%',
-                  }}>
-                  <Image
-                    source={require('../../../hero/3.png')}
-                    style={{
-                      width: metrics.screenWidth / 5,
-                      height: metrics.screenHeight / 5,
-                    }}
-                  />
-                </View>
-                <View
-                  style={{
-                    width: '60%',
-                  }}>
-                  <Text
-                    style={{fontSize: 14, textAlign: 'center', padding: 10}}>
-                    Dolore cillum magna sunt elit irure esse laborum aute culpa
-                    commodo veniam voluptate laboris.
-                  </Text>
-                </View>
-              </View>
+          </View> */}
 
-              <ButtonX
-                dark={true}
-                color={theme.colors.primary}
-                label={'View'}
-              />
-            </View>
-          </View>
-          <View
+          {/* <View
             style={{
               marginTop: 10,
               flex: 1,
@@ -260,7 +216,59 @@ const MainScreen = ({routes, navigation}) => {
                 label={'View'}
               />
             </View>
-          </View>
+          </View> */}
+          {/* <View
+            style={{
+              marginTop: 10,
+              flex: 1,
+              flexDirection: 'column',
+              justifyContent: 'space-around',
+            }}>
+            <View
+              style={{
+                backgroundColor: '#e1e1e1e1',
+                width: metrics.screenWidth * 0.95,
+                height: metrics.screenHeight / 5,
+                borderRadius: 10,
+              }}>
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: 'row',
+                  justifyContent: 'space-around',
+                }}>
+                <View
+                  style={{
+                    width: '30%',
+                  }}>
+                  <Image
+                    source={require('../../../hero/3.png')}
+                    style={{
+                      width: metrics.screenWidth / 5,
+                      height: metrics.screenHeight / 5,
+                    }}
+                  />
+                </View>
+                <View
+                  style={{
+                    width: '60%',
+                  }}>
+                  <Text
+                    style={{fontSize: 14, textAlign: 'center', padding: 10}}>
+                    Dolore cillum magna sunt elit irure esse laborum aute culpa
+                    commodo veniam voluptate laboris.
+                  </Text>
+                </View>
+              </View>
+
+              <ButtonX
+                dark={true}
+                color={theme.colors.primary}
+                label={'View'}
+              />
+            </View>
+          </View> */}
+
           <View style={{alignItems: 'center'}}>
             <TouchableOpacity onPress={record}>
               <View
