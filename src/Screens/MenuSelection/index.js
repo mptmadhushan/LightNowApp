@@ -18,7 +18,7 @@ const MainScreen = ({routes, navigation}) => {
     const anew = '2.2';
     var myNumber = 120.2;
     var myString = myNumber.toString();
-    Tts.speak(myString, {
+    Tts.speak('You have Chosen English', {
       androidParams: {
         KEY_PARAM_PAN: -1,
         KEY_PARAM_VOLUME: 0.5,
