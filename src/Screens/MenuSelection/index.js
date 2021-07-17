@@ -5,22 +5,26 @@ import LoadingActionContainer from '../../Components/LoadingActionContainer';
 import {Container, HeaderButton} from '../../Components';
 import useAppTheme from '../../Themes/Context';
 import {IconX, ICON_TYPE} from '../../Icons';
-import {useStoreState} from 'easy-peasy';
-import Fonts from '../../Themes/Fonts';
 import {TouchableOpacity} from 'react-native';
 import {ButtonX} from '../../Components';
 import AudioRecord from 'react-native-audio-record';
 import {BASE_URL} from '../../Config/index';
+import Tts from 'react-native-tts';
 
 const MainScreen = ({routes, navigation}) => {
   const {theme} = useAppTheme();
   // eslint-disable-next-line prettier/prettier
-  const {username, password} = useStoreState((state) => ({
-    username: state.login.username,
-    password: state.login.password,
-  }));
-
   useEffect(() => {
+    const anew = '2.2';
+    var myNumber = 120.2;
+    var myString = myNumber.toString();
+    Tts.speak(myString, {
+      androidParams: {
+        KEY_PARAM_PAN: -1,
+        KEY_PARAM_VOLUME: 0.5,
+        KEY_PARAM_STREAM: 'STREAM_MUSIC',
+      },
+    });
     const options = {
       sampleRate: 16000, // default 44100
       channels: 1, // 1 or 2, default 1
@@ -49,13 +53,9 @@ const MainScreen = ({routes, navigation}) => {
   const stopRecord = async () => {
     console.log('recordStop ');
     const audioFile = await AudioRecord.stop();
-    AudioRecord.on('data', (data) => {
-      // const chunk = Buffer.from(data, 'base64');
-      // console.log('chunk', chunk);
-    });
+    AudioRecord.on('data', (data) => {});
     console.log('audioFile latees 🍷🍷', audioFile);
     initialRec(audioFile);
-    // AudioRecord.stop();
   };
   const initialRec = (audioFile) => {
     uploadAudio(audioFile);

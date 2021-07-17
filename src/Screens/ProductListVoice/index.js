@@ -23,7 +23,6 @@ const MainScreen = ({routes, route, navigation}) => {
     const newData = JSON.parse(response.cartitems);
     for (let value of newData) {
       // for (let value of searchData.list) {
-      console.log('🐵', value.item_name); // Will log value in array
       Tts.speak(`item`, {
         androidParams: {
           KEY_PARAM_PAN: -1,
@@ -38,13 +37,23 @@ const MainScreen = ({routes, route, navigation}) => {
           KEY_PARAM_STREAM: 'STREAM_MUSIC',
         },
       });
-      // Tts.speak(value.item_unit, {
-      //   androidParams: {
-      //     KEY_PARAM_PAN: -1,
-      //     KEY_PARAM_VOLUME: 0.5,
-      //     KEY_PARAM_STREAM: 'STREAM_MUSIC',
-      //   },
-      // });
+      const myNumber = value.item_qty;
+      var myString = myNumber.toString();
+
+      Tts.speak(myString, {
+        androidParams: {
+          KEY_PARAM_PAN: -1,
+          KEY_PARAM_VOLUME: 0.5,
+          KEY_PARAM_STREAM: 'STREAM_MUSIC',
+        },
+      });
+      Tts.speak('kilograms', {
+        androidParams: {
+          KEY_PARAM_PAN: -1,
+          KEY_PARAM_VOLUME: 0.5,
+          KEY_PARAM_STREAM: 'STREAM_MUSIC',
+        },
+      });
     }
     setResData(newData);
     console.log('😎', newData);
@@ -115,7 +124,7 @@ const MainScreen = ({routes, route, navigation}) => {
     })
       .then((response) => response.json())
       .then((response) => {
-        console.log('response 🔥', response.flag);
+        console.log('response 🔥🔥🔥', response.flag);
         console.log(response);
         // if (!response.flag === 'navigation-error') {
         //   navigation.navigate(response.flag);

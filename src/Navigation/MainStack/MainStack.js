@@ -6,6 +6,7 @@ import MenuSelection from '../../Screens/MenuSelection/index';
 import LightNowAssistant from '../../Screens/LightNowAssistant/index';
 import OrderDetails from '../../Screens/OrderDetails/index';
 import OFFERSANDCOUPONS from '../../Screens/OffersAndCo/index';
+import OffersNearMe from '../../Screens/OffersNearMe/index';
 import PendingDeliveryList from '../../Screens/PendingDeliveryList/index';
 import CancelledOrders from '../../Screens/CancelledOrders/index';
 import CompletedOrders from '../../Screens/CompletedOrders/index';
@@ -50,6 +51,11 @@ export default (props) => {
         options={{title: 'OFFERS AND COUPONS'}}
         name="list-offer-success"
         component={OFFERSANDCOUPONS}
+      />
+      <Stack.Screen
+        options={{title: 'OFFERS NEAR ME'}}
+        name="offer-success"
+        component={OffersNearMe}
       />
       <Stack.Screen
         options={{title: 'Pending Delivery'}}

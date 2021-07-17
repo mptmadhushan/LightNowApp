@@ -13,19 +13,24 @@ import metrics from '../../Themes/Metrics';
 import {Image} from 'react-native';
 import AudioRecord from 'react-native-audio-record';
 import {BASE_URL} from '../../Config/index';
+import Tts from 'react-native-tts';
 
-const MainScreen = ({routes, navigation}) => {
+const MainScreen = ({routes, route, navigation}) => {
   const {theme} = useAppTheme();
   // eslint-disable-next-line prettier/prettier
-  const {username, password} = useStoreState((state) => ({
-    username: state.login.username,
-    password: state.login.password,
-  }));
+  const {response} = route.params;
 
   useEffect(() => {
     const _toggleDrawer = () => {
       navigation.toggleDrawer();
     };
+    Tts.speak(response.msg, {
+      androidParams: {
+        KEY_PARAM_PAN: -1,
+        KEY_PARAM_VOLUME: 0.5,
+        KEY_PARAM_STREAM: 'STREAM_MUSIC',
+      },
+    });
     const options = {
       sampleRate: 16000, // default 44100
       channels: 1, // 1 or 2, default 1
@@ -107,7 +112,7 @@ const MainScreen = ({routes, navigation}) => {
           padding: 10,
         }}>
         <ScrollView>
-          <View
+          {/* <View
             style={{
               flex: 1,
               flexDirection: 'column',
@@ -170,7 +175,7 @@ const MainScreen = ({routes, navigation}) => {
               color={theme.colors.primary}
               label={'Cancel this order'}
             />
-          </View>
+          </View> */}
 
           <View style={{alignItems: 'center'}}>
             <TouchableOpacity onPress={record}>

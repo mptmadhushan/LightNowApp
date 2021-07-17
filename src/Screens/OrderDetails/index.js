@@ -91,7 +91,14 @@ const MainScreen = ({routes, navigation}) => {
         console.log('response 🔥', response.flag);
         console.log(response);
         if (response.flag == 'order-completed') {
-          navigation.navigate('order-completed');
+          navigation.navigate('order-completed', {
+            response,
+          });
+        }
+        if (response.flag == 'order-pending') {
+          navigation.navigate('order-pending', {
+            response,
+          });
         }
         // if (!response.flag != 'navigation-error') {
         //   navigation.navigate(response.flag);

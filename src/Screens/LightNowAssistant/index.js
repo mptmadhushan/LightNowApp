@@ -127,6 +127,9 @@ const MainScreen = ({routes, navigation}) => {
         if (response.flag == 'coupon-success') {
           navigation.navigate('coupon-success');
         }
+        if (response.flag == 'offer-success') {
+          navigation.navigate('offer-success');
+        }
         if (response.flag == 'order-menu') {
           navigation.navigate('order-menu');
         }
