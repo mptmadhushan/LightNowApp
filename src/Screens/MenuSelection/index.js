@@ -119,13 +119,13 @@ const MainScreen = ({routes, navigation}) => {
           onPress={() => navigation.navigate('voice-search')}
           label={'Voice Search'}
         />
-        <ButtonX
+        {/* <ButtonX
           // loading={loading}
           dark={true}
           color={theme.colors.primary}
           onPress={() => navigation.navigate('create-list')}
           label={'Image Search'}
-        />
+        /> */}
         <ButtonX
           // loading={loading}
           dark={true}
@@ -141,14 +141,14 @@ const MainScreen = ({routes, navigation}) => {
           onPress={() => navigation.navigate('profile')}
           label={'Profile'}
         />
-        <ButtonX
+        {/* <ButtonX
           // loading={loading}
           dark={true}
           color={theme.colors.primary}
           // onPress={loginUser}
           onPress={() => navigation.navigate('order')}
           label={'Orders'}
-        />
+        /> */}
         <ButtonX
           // loading={loading}
           dark={true}

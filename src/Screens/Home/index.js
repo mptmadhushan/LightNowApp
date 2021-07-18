@@ -130,7 +130,8 @@ const MainScreen = ({routes, navigation}) => {
         <View style={{padding: 20, margin: 10, backgroundColor: 'white'}}>
           <Text style={{textAlign: 'center', fontSize: 18}}>Welcome</Text>
           <Text style={{textAlign: 'center', fontFamily: Fonts.type.italic}}>
-            {username + ' ' + password}
+            {/* {username + ' ' + password} */}
+            Test User
           </Text>
         </View>
         <View style={{alignItems: 'center'}}>

@@ -63,13 +63,15 @@ const MainScreen = ({routes, route, navigation}) => {
           KEY_PARAM_STREAM: 'STREAM_MUSIC',
         },
       });
-      // Tts.speak(searchData.listOffers[0].item_price, {
-      //   androidParams: {
-      //     KEY_PARAM_PAN: -1,
-      //     KEY_PARAM_VOLUME: 0.5,
-      //     KEY_PARAM_STREAM: 'STREAM_MUSIC',
-      //   },
-      // });
+      const myNumber = searchData.listOffers[0].item_offer_price;
+      var myString = myNumber.toString();
+      Tts.speak(myString, {
+        androidParams: {
+          KEY_PARAM_PAN: -1,
+          KEY_PARAM_VOLUME: 0.5,
+          KEY_PARAM_STREAM: 'STREAM_MUSIC',
+        },
+      });
     } catch (e) {
       console.log('ee');
       // error reading value

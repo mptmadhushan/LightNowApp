@@ -106,8 +106,7 @@ const MainScreen = ({routes, route, navigation}) => {
             response,
           });
         }
-        if (response.flag == 'check-order'
-        ) {
+        if (response.flag == 'check-order') {
           navigation.navigate('check-order');
         }
       })

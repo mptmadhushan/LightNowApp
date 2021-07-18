@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, SafeAreaView, ScrollView} from 'react-native';
 import LoadingActionContainer from '../../Components/LoadingActionContainer';
 import {Container, HeaderButton} from '../../Components';
@@ -11,19 +12,16 @@ import {TouchableOpacity} from 'react-native';
 import {ButtonX} from '../../Components';
 import metrics from '../../Themes/Metrics';
 import {Image} from 'react-native';
-import {BASE_URL} from '../../Config/index';
 import AudioRecord from 'react-native-audio-record';
+import {BASE_URL} from '../../Config/index';
 import Tts from 'react-native-tts';
 
-const MainScreen = ({routes, navigation, route}) => {
-  // console.log('navigation', navigation);
+const MainScreen = ({routes, route, navigation}) => {
   const {theme} = useAppTheme();
   // eslint-disable-next-line prettier/prettier
-  const {username, password} = useStoreState((state) => ({
-    username: state.login.username,
-    password: state.login.password,
-  }));
   const {response} = route.params;
+  const [resList, setListData] = useState('');
+
   useEffect(() => {
     console.log('🌙🌙', response);
     Tts.speak(response.msg, {
@@ -33,6 +31,19 @@ const MainScreen = ({routes, navigation, route}) => {
         KEY_PARAM_STREAM: 'STREAM_MUSIC',
       },
     });
+    const newData = JSON.parse(response.orders);
+    setListData(newData);
+
+    for (let value of newData) {
+      Tts.speak(`address${value.address}`, {
+        androidParams: {
+          KEY_PARAM_PAN: -1,
+          KEY_PARAM_VOLUME: 0.5,
+          KEY_PARAM_STREAM: 'STREAM_MUSIC',
+        },
+      });
+    }
+    console.log('use effect completed order');
     const options = {
       sampleRate: 16000, // default 44100
       channels: 1, // 1 or 2, default 1
@@ -44,7 +55,7 @@ const MainScreen = ({routes, navigation, route}) => {
     AudioRecord.init(options);
 
     console.log('use effect home');
-  }, [navigation, theme.colors.headerTitle]);
+  }, []);
 
   const record = () => {
     console.log('record');
@@ -115,58 +126,7 @@ const MainScreen = ({routes, navigation, route}) => {
           padding: 10,
         }}>
         <ScrollView>
-          {/* <View
-            style={{
-              flex: 1,
-              flexDirection: 'column',
-              justifyContent: 'space-around',
-            }}>
-            <View
-              style={{
-                backgroundColor: '#e1e1e1e1',
-                width: metrics.screenWidth * 0.95,
-                height: metrics.screenHeight / 5,
-                borderRadius: 10,
-              }}>
-              <View
-                style={{
-                  flex: 1,
-                  flexDirection: 'row',
-                  justifyContent: 'space-around',
-                }}>
-                <View
-                  style={{
-                    width: '30%',
-                  }}>
-                  <Image
-                    source={require('../../../hero/3.png')}
-                    style={{
-                      width: metrics.screenWidth / 5,
-                      height: metrics.screenHeight / 5,
-                    }}
-                  />
-                </View>
-                <View
-                  style={{
-                    width: '60%',
-                  }}>
-                  <Text
-                    style={{fontSize: 14, textAlign: 'center', padding: 10}}>
-                    Dolore cillum magna sunt elit irure esse laborum aute culpa
-                    commodo veniam voluptate laboris.
-                  </Text>
-                </View>
-              </View>
-
-              <ButtonX
-                dark={true}
-                color={theme.colors.primary}
-                label={'View'}
-              />
-            </View>
-          </View> */}
-
-          {/* <View
+          <View
             style={{
               marginTop: 10,
               flex: 1,
@@ -177,7 +137,7 @@ const MainScreen = ({routes, navigation, route}) => {
               style={{
                 backgroundColor: '#e1e1e1e1',
                 width: metrics.screenWidth * 0.95,
-                height: metrics.screenHeight / 5,
+                height: metrics.screenHeight / 2,
                 borderRadius: 10,
               }}>
               <View
@@ -194,7 +154,7 @@ const MainScreen = ({routes, navigation, route}) => {
                     source={require('../../../hero/3.png')}
                     style={{
                       width: metrics.screenWidth / 5,
-                      height: metrics.screenHeight / 5,
+                      height: metrics.screenHeight / 7,
                     }}
                   />
                 </View>
@@ -202,11 +162,18 @@ const MainScreen = ({routes, navigation, route}) => {
                   style={{
                     width: '60%',
                   }}>
-                  <Text
-                    style={{fontSize: 14, textAlign: 'center', padding: 10}}>
-                    Dolore cillum magna sunt elit irure esse laborum aute culpa
-                    commodo veniam voluptate laboris.
-                  </Text>
+                  {resList ? (
+                    <Text
+                      style={{fontSize: 14, textAlign: 'center', padding: 10}}>
+                      Address :{resList[0].address}
+                    </Text>
+                  ) : null}
+                  {resList ? (
+                    <Text
+                      style={{fontSize: 14, textAlign: 'center', padding: 10}}>
+                      coupon value :{resList[0].coupon_value}
+                    </Text>
+                  ) : null}
                 </View>
               </View>
 
@@ -216,58 +183,7 @@ const MainScreen = ({routes, navigation, route}) => {
                 label={'View'}
               />
             </View>
-          </View> */}
-          {/* <View
-            style={{
-              marginTop: 10,
-              flex: 1,
-              flexDirection: 'column',
-              justifyContent: 'space-around',
-            }}>
-            <View
-              style={{
-                backgroundColor: '#e1e1e1e1',
-                width: metrics.screenWidth * 0.95,
-                height: metrics.screenHeight / 5,
-                borderRadius: 10,
-              }}>
-              <View
-                style={{
-                  flex: 1,
-                  flexDirection: 'row',
-                  justifyContent: 'space-around',
-                }}>
-                <View
-                  style={{
-                    width: '30%',
-                  }}>
-                  <Image
-                    source={require('../../../hero/3.png')}
-                    style={{
-                      width: metrics.screenWidth / 5,
-                      height: metrics.screenHeight / 5,
-                    }}
-                  />
-                </View>
-                <View
-                  style={{
-                    width: '60%',
-                  }}>
-                  <Text
-                    style={{fontSize: 14, textAlign: 'center', padding: 10}}>
-                    Dolore cillum magna sunt elit irure esse laborum aute culpa
-                    commodo veniam voluptate laboris.
-                  </Text>
-                </View>
-              </View>
-
-              <ButtonX
-                dark={true}
-                color={theme.colors.primary}
-                label={'View'}
-              />
-            </View>
-          </View> */}
+          </View>
 
           <View style={{alignItems: 'center'}}>
             <TouchableOpacity onPress={record}>

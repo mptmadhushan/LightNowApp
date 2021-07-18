@@ -11,6 +11,7 @@ import {TouchableOpacity, ListItem} from 'react-native';
 import {ButtonX} from '../../Components';
 import AudioRecord from 'react-native-audio-record';
 import Tts from 'react-native-tts';
+import {BASE_URL} from '../../Config/index';
 
 const MainScreen = ({routes, route, navigation}) => {
   const {theme} = useAppTheme();
@@ -43,6 +44,13 @@ const MainScreen = ({routes, route, navigation}) => {
       },
     });
     Tts.speak(`payment${response.payment}`, {
+      androidParams: {
+        KEY_PARAM_PAN: -1,
+        KEY_PARAM_VOLUME: 0.5,
+        KEY_PARAM_STREAM: 'STREAM_MUSIC',
+      },
+    });
+    Tts.speak(`total${response.total}$`, {
       androidParams: {
         KEY_PARAM_PAN: -1,
         KEY_PARAM_VOLUME: 0.5,
@@ -95,7 +103,7 @@ const MainScreen = ({routes, route, navigation}) => {
     formData.append('flag', 'name');
     console.log(formData);
 
-    fetch('http://b0a48274d10c.ngrok.io/navigation/en', {
+    fetch(`${BASE_URL}/voicesearch/en`, {
       method: 'POST',
       headers: {
         'Content-Type': 'multipart/form-data',
@@ -106,8 +114,21 @@ const MainScreen = ({routes, route, navigation}) => {
       .then((response) => {
         console.log('response 🔥', response.flag);
         console.log(response);
-        if (!response.flag != 'navigation-error') {
-          navigation.navigate(response.flag);
+        if (response.flag == 'back') {
+          navigation.navigate('language-success');
+        }
+        if (response.flag == 'place-order') {
+          navigation.navigate('place-order', {
+            response,
+          });
+        }
+        if (response.flag == 'search-save') {
+          navigation.navigate('search-save', {
+            response,
+          });
+        }
+        if (response.flag == 'check-order') {
+          navigation.navigate('check-order');
         } else {
           console.log('route error');
         }

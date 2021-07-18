@@ -100,6 +100,11 @@ const MainScreen = ({routes, navigation}) => {
             response,
           });
         }
+        if (response.flag == 'order-cancelled') {
+          navigation.navigate('order-cancelled', {
+            response,
+          });
+        }
         // if (!response.flag != 'navigation-error') {
         //   navigation.navigate(response.flag);
         // } else {

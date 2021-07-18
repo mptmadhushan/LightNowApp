@@ -105,7 +105,7 @@ export default ({navigation}) => {
   };
 
   const {username, password, status} = useStoreState((state) => ({
-    username: 'state.login.username',
+    username: 'TestUser',
     password: 'state.login.password',
     status: state.login.status,
   }));

@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, SafeAreaView, ScrollView} from 'react-native';
 import LoadingActionContainer from '../../Components/LoadingActionContainer';
 import {Container, HeaderButton} from '../../Components';
@@ -19,11 +19,10 @@ const MainScreen = ({routes, route, navigation}) => {
   const {theme} = useAppTheme();
   // eslint-disable-next-line prettier/prettier
   const {response} = route.params;
+  const [resList, setListData] = useState('');
 
   useEffect(() => {
-    const _toggleDrawer = () => {
-      navigation.toggleDrawer();
-    };
+    console.log('hello ', JSON.parse(response.orders));
     Tts.speak(response.msg, {
       androidParams: {
         KEY_PARAM_PAN: -1,
@@ -31,6 +30,25 @@ const MainScreen = ({routes, route, navigation}) => {
         KEY_PARAM_STREAM: 'STREAM_MUSIC',
       },
     });
+    const newData = JSON.parse(response.orders);
+    setListData(newData);
+    for (let value of newData) {
+      // for (let value of searchData.list) {
+      Tts.speak(`address${value.address}`, {
+        androidParams: {
+          KEY_PARAM_PAN: -1,
+          KEY_PARAM_VOLUME: 0.5,
+          KEY_PARAM_STREAM: 'STREAM_MUSIC',
+        },
+      });
+      // Tts.speak(`cancel_reason${value.cancel_reason}`, {
+      //   androidParams: {
+      //     KEY_PARAM_PAN: -1,
+      //     KEY_PARAM_VOLUME: 0.5,
+      //     KEY_PARAM_STREAM: 'STREAM_MUSIC',
+      //   },
+      // });
+    }
     const options = {
       sampleRate: 16000, // default 44100
       channels: 1, // 1 or 2, default 1
@@ -41,7 +59,7 @@ const MainScreen = ({routes, route, navigation}) => {
 
     AudioRecord.init(options);
     console.log('use effect home');
-  }, [navigation, theme.colors.headerTitle]);
+  }, []);
 
   const record = () => {
     console.log('record');
@@ -112,7 +130,7 @@ const MainScreen = ({routes, route, navigation}) => {
           padding: 10,
         }}>
         <ScrollView>
-          {/* <View
+          <View
             style={{
               flex: 1,
               flexDirection: 'column',
@@ -145,21 +163,24 @@ const MainScreen = ({routes, route, navigation}) => {
                 </View>
                 <View
                   style={{
-                    width: '60%',
+                    width: '70%',
                   }}>
-                  <Text
-                    style={{fontSize: 14, textAlign: 'center', padding: 10}}>
-                    Dolore cillum magna sunt elit irure esse laborum aute culpa
-                    commodo veniam voluptate laboris.
-                  </Text>
+                  {resList ? (
+                    <Text
+                      style={{fontSize: 14, textAlign: 'center', padding: 10}}>
+                      Address :{resList[0].address}
+                    </Text>
+                  ) : null}
+                  {resList ? (
+                    <Text
+                      style={{fontSize: 14, textAlign: 'center', padding: 10}}>
+                      coupon value :{resList[0].coupon_value}
+                    </Text>
+                  ) : null}
                 </View>
               </View>
             </View>
-            <Text style={{fontSize: 14, textAlign: 'center', padding: 10}}>
-              Dolore cillum magna sunt elit irure esse laborum aute culpa
-              commodo veniam voluptate laboris. Dolore cillum magna sunt elit
-              irure esse laborum aute culpa commodo veniam voluptate laboris.
-            </Text>
+
             <ButtonX
               dark={true}
               color={theme.colors.primary}
@@ -175,7 +196,7 @@ const MainScreen = ({routes, route, navigation}) => {
               color={theme.colors.primary}
               label={'Cancel this order'}
             />
-          </View> */}
+          </View>
 
           <View style={{alignItems: 'center'}}>
             <TouchableOpacity onPress={record}>
