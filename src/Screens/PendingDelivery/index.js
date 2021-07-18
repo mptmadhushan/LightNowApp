@@ -101,6 +101,7 @@ const MainScreen = ({routes, route, navigation}) => {
       name: 'test.wav',
     });
     formData.append('flag', 'name');
+    formData.append(orderId, 1);
     console.log(formData);
 
     fetch(`${BASE_URL}/voicesearch/en`, {
@@ -114,10 +115,27 @@ const MainScreen = ({routes, route, navigation}) => {
       .then((response) => {
         console.log('response 🔥', response.flag);
         console.log(response);
+        if (response.flag == 'back') {
+          Tts.speak(response.msg, {
+            androidParams: {
+              KEY_PARAM_PAN: -1,
+              KEY_PARAM_VOLUME: 0.5,
+              KEY_PARAM_STREAM: 'STREAM_MUSIC',
+            },
+          });
+          navigation.navigate('order-menu');
+        }
         if (!response.flag === 'navigation-error') {
           navigation.navigate(response.flag);
         } else {
           console.log('route error');
+          Tts.speak(response.msg, {
+            androidParams: {
+              KEY_PARAM_PAN: -1,
+              KEY_PARAM_VOLUME: 0.5,
+              KEY_PARAM_STREAM: 'STREAM_MUSIC',
+            },
+          });
         }
       })
       .catch((err) => console.error(err));

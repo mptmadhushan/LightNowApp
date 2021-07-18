@@ -11,6 +11,7 @@ import {TouchableOpacity} from 'react-native';
 import {ButtonX} from '../../Components';
 import AudioRecord from 'react-native-audio-record';
 import {BASE_URL} from '../../Config/index';
+import Tts from 'react-native-tts';
 
 const MainScreen = ({routes, navigation}) => {
   const {theme} = useAppTheme();
@@ -24,6 +25,16 @@ const MainScreen = ({routes, navigation}) => {
     const _toggleDrawer = () => {
       navigation.toggleDrawer();
     };
+    Tts.speak(
+      `Do you want to see Completed Orders, Cancelled Orders or Pending Orders`,
+      {
+        androidParams: {
+          KEY_PARAM_PAN: -1,
+          KEY_PARAM_VOLUME: 0.5,
+          KEY_PARAM_STREAM: 'STREAM_MUSIC',
+        },
+      },
+    );
     const options = {
       sampleRate: 16000, // default 44100
       channels: 1, // 1 or 2, default 1
@@ -78,7 +89,7 @@ const MainScreen = ({routes, navigation}) => {
     });
     // formData.append('flag', 'name');
     console.log(formData);
-
+    formData.append('userId', 3);
     fetch(`${BASE_URL}/voicebot/en`, {
       method: 'POST',
       headers: {
