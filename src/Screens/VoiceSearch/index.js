@@ -61,7 +61,7 @@ const MainScreen = ({routes, navigation}) => {
     let timeout = setTimeout(() => {
       stopRecord();
       console.log('hello');
-    }, 15000);
+    }, 12000);
   };
 
   const stopRecord = async () => {
@@ -121,6 +121,16 @@ const MainScreen = ({routes, navigation}) => {
         }
         if (response.flag == 'check-order') {
           navigation.navigate('check-order');
+        }
+        if (response.flag == 'checkout') {
+          Tts.speak(response.msg, {
+            androidParams: {
+              KEY_PARAM_PAN: -1,
+              KEY_PARAM_VOLUME: 0.5,
+              KEY_PARAM_STREAM: 'STREAM_MUSIC',
+            },
+          });
+          navigation.navigate('language-success');
         }
         if (response.flag == 'search-success') {
           setResData(response);

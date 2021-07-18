@@ -113,8 +113,8 @@ const MainScreen = ({routes, route, navigation}) => {
       name: 'test.wav',
     });
     formData.append('flag', 'name');
+    formData.append('userId', 3);
     console.log(formData);
-
     fetch(`${BASE_URL}/voicesearch/en`, {
       method: 'POST',
       headers: {
@@ -139,13 +139,23 @@ const MainScreen = ({routes, route, navigation}) => {
             response,
           });
         }
+        if (response.flag == 'checkout') {
+          Tts.speak(response.msg, {
+            androidParams: {
+              KEY_PARAM_PAN: -1,
+              KEY_PARAM_VOLUME: 0.5,
+              KEY_PARAM_STREAM: 'STREAM_MUSIC',
+            },
+          });
+          navigation.navigate('language-success');
+        }
         if (response.flag == 'search-save') {
           navigation.navigate('search-save', {
             response,
           });
         }
         if (response.flag == 'check-order') {
-          navigation.navigate('check-order');
+          // navigation.navigate('check-order');
         }
       })
 
