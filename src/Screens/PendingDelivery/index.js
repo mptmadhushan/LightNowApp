@@ -234,5 +234,4 @@ const MainScreen = ({routes, route, navigation}) => {
     </LoadingActionContainer>
   );
 };
-
 export default MainScreen;
